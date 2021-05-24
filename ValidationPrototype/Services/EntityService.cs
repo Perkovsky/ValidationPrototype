@@ -17,7 +17,11 @@ namespace ValidationPrototype.Services
 	{
 		public Task<int> CreateEntityAsync(CancellationToken cancellationToken)
 		{
-			throw new NotImplementedException("This is a test exception message!");
+			var rng = new Random();
+			if (rng.Next() % 2 > 0)
+				throw new ArgumentException("This is a message of BadRequest!");
+			else
+				throw new NotImplementedException("This is a message of InternalServerError!");
 		}
 
 		public Task<EntityDetailResponseModel> GetEntityAsync(EntityDetailRequestModel model, CancellationToken cancellationToken)

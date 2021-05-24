@@ -50,6 +50,8 @@ namespace ValidationPrototype
 				app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ValidationPrototype v1"));
 			}
 
+			app.UseGlobalErrorHandling();
+
 			app.UseHttpsRedirection();
 			app.UseRouting();
 			app.UseAuthorization();
