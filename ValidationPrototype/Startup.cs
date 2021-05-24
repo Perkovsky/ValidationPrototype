@@ -9,8 +9,11 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
+using ValidationPrototype.Extensions;
 using ValidationPrototype.Services;
 
 namespace ValidationPrototype
@@ -31,9 +34,10 @@ namespace ValidationPrototype
 			{
 				c.DescribeAllParametersInCamelCase();
 				c.SwaggerDoc("v1", new OpenApiInfo { Title = "ValidationPrototype", Version = "v1" });
+				c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "ValidationPrototype.xml"));
 			});
 
-			services.AddSingleton<IIDentityService, IDentityService>();
+			services.AddSingleton<IIdentityService, IdentityService>();
 			services.AddSingleton<IEntityService, EntityService>();
 		}
 
@@ -47,10 +51,11 @@ namespace ValidationPrototype
 			}
 
 			app.UseHttpsRedirection();
-
 			app.UseRouting();
-
 			app.UseAuthorization();
+
+			// add custom middlewares here
+			//app.UsePermissionAccessValidation();
 
 			app.UseEndpoints(endpoints =>
 			{

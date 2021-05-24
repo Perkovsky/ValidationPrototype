@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 
 namespace ValidationPrototype.Services
 {
-	public interface IIDentityService
+	public interface IIdentityService
 	{
 
 	}
 
-	public class IDentityService : IIDentityService
+	public class IdentityService : IIdentityService
 	{
 
 	}

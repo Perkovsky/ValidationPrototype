@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ValidationPrototype</name>
+    </assembly>
+    <members>
+        <member name="M:ValidationPrototype.Controllers.PrototypeController.GetEntity(ValidationPrototype.Models.EntityDetailRequestModel,System.Threading.CancellationToken)">
+            <summary>
+            Get entity detail: test request model validation
+            </summary>
+        </member>
+        <member name="M:ValidationPrototype.Controllers.PrototypeController.CreateEntity(System.Threading.CancellationToken)">
+            <summary>
+            Create entity: test exception
+            </summary>
+        </member>
+    </members>
+</doc>
