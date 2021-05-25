@@ -1,6 +1,5 @@
 using FluentValidation.AspNetCore;
 using MicroElements.Swashbuckle.FluentValidation;
-using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -39,8 +38,8 @@ namespace ValidationPrototype
 				{
 					c.RegisterValidatorsFromAssemblyContaining<Startup>();
 
-					//// Optionally set validator factory if you have problems with scope resolve inside validators.
-					//c.ValidatorFactoryType = typeof(HttpContextServiceProviderValidatorFactory);
+					// Optionally set validator factory if you have problems with scope resolve inside validators.
+					c.ValidatorFactoryType = typeof(HttpContextServiceProviderValidatorFactory);
 				});
 			
 			services.AddSwaggerGen(c =>
@@ -48,8 +47,11 @@ namespace ValidationPrototype
 				c.DescribeAllParametersInCamelCase();
 				c.SwaggerDoc("v1", new OpenApiInfo { Title = "ValidationPrototype", Version = "v1" });
 				c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "ValidationPrototype.xml"));
-				//c.AddFluentValidationRules();
+				
+				c.AddFluentValidationRules();
 			});
+
+			//// use the latest stable version https://github.com/micro-elements/MicroElements.Swashbuckle.FluentValidation
 			//services.AddFluentValidationRulesToSwagger();
 
 			services.AddScoped<IEntityValidationService, EntityValidationService>();
