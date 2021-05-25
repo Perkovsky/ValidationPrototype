@@ -1,3 +1,6 @@
+using FluentValidation.AspNetCore;
+using MicroElements.Swashbuckle.FluentValidation;
+using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -7,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -29,16 +33,27 @@ namespace ValidationPrototype
 
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddControllers();
+			services
+				.AddControllers()
+				.AddFluentValidation(c =>
+				{
+					c.RegisterValidatorsFromAssemblyContaining<Startup>();
+
+					//// Optionally set validator factory if you have problems with scope resolve inside validators.
+					//c.ValidatorFactoryType = typeof(HttpContextServiceProviderValidatorFactory);
+				});
+			
 			services.AddSwaggerGen(c =>
 			{
 				c.DescribeAllParametersInCamelCase();
 				c.SwaggerDoc("v1", new OpenApiInfo { Title = "ValidationPrototype", Version = "v1" });
 				c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "ValidationPrototype.xml"));
+				//c.AddFluentValidationRules();
 			});
+			//services.AddFluentValidationRulesToSwagger();
 
-			services.AddSingleton<IEntityValidationService, EntityValidationService>();
-			services.AddSingleton<IEntityService, EntityService>();
+			services.AddScoped<IEntityValidationService, EntityValidationService>();
+			services.AddScoped<IEntityService, EntityService>();
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

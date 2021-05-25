@@ -9,6 +9,11 @@
             Get entity detail: test request model validation
             </summary>
         </member>
+        <member name="M:ValidationPrototype.Controllers.PrototypeController.GetEntities(ValidationPrototype.Models.EntityFilterRequestModel,System.Threading.CancellationToken)">
+            <summary>
+            Get entity list: test request model validation
+            </summary>
+        </member>
         <member name="M:ValidationPrototype.Controllers.PrototypeController.CreateEntity(System.Threading.CancellationToken)">
             <summary>
             Create entity: test exception

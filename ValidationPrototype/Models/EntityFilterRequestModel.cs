@@ -1,33 +1,28 @@
 ﻿using FluentValidation;
-using Microsoft.AspNetCore.Mvc;
 using System;
 using ValidationPrototype.Services;
 using ValidationPrototype.Validators;
 
 namespace ValidationPrototype.Models
 {
-	public class EntityDetailRequestModel
+	public class EntityFilterRequestModel
 	{
-		[FromRoute]
-		public int Id { get; set; }
-
-		public int UnitId { get; set; }
 		public int BuildingId { get; set; }
-
 		public DateTime From { get; set; }
 		public DateTime To { get; set; }
+		public string Search { get; set; }
 	}
 
-	public class EntityDetailRequestModelValidator : BaseValidator<EntityDetailRequestModel, IEntityValidationService>
+	public class EntityFilterRequestModelValidator : BaseValidator<EntityFilterRequestModel, IEntityValidationService>
 	{
-		public EntityDetailRequestModelValidator(IEntityValidationService entityValidationService)
+		public EntityFilterRequestModelValidator(IEntityValidationService entityValidationService)
 			: base(entityValidationService)
 		{
 		}
 
 		protected override void PrimitiveLogicValidation()
 		{
-			RuleFor(x => x.Id)
+			RuleFor(x => x.BuildingId)
 				.NotNull()
 				.NotEmpty()
 				.WithMessage("{PropertyName} cannot be empty.");
@@ -42,9 +37,9 @@ namespace ValidationPrototype.Models
 				.NotEmpty()
 				.WithMessage("{PropertyName} cannot be empty.");
 
-			RuleFor(x => new { x.BuildingId, x.UnitId })
-				.Must(x => x.BuildingId > 0 || x.UnitId > 0)
-				.WithMessage("Building ID or Unit ID is required.");
+			RuleFor(x => new { x.From, x.To })
+				.Must(x => x.To > x.From)
+				.WithMessage("To must be greater than From.");
 		}
 	}
 }

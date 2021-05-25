@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ValidationPrototype.Models;
@@ -32,6 +29,19 @@ namespace ValidationPrototype.Controllers
 		public async Task<ActionResult> GetEntity([FromQuery]EntityDetailRequestModel model, CancellationToken cancellationToken)
 		{
 			var result = await _entityService.GetEntityAsync(model, cancellationToken)
+				.ConfigureAwait(false);
+
+			return Ok(result);
+		}
+
+		/// <summary>
+		/// Get entity list: test request model validation
+		/// </summary>
+		[HttpGet("entities")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		public async Task<ActionResult> GetEntities([FromQuery] EntityFilterRequestModel model, CancellationToken cancellationToken)
+		{
+			var result = await _entityService.GetEntitiesAsync(model, cancellationToken)
 				.ConfigureAwait(false);
 
 			return Ok(result);

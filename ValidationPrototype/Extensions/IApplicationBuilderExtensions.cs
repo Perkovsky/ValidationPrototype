@@ -20,7 +20,7 @@ namespace ValidationPrototype.Extensions
 		private static int GetStatusCode(Exception ex)
 		{
 			// Status = 400
-			if (ex is ArgumentException || ex is ArgumentNullException || ex is InvalidOperationException || ex is ValidationException)
+			if (ex is ValidationException)
 				return StatusCodes.Status400BadRequest;
 
 			//// Status = 401
