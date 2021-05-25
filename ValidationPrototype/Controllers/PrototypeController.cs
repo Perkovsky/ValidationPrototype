@@ -49,5 +49,25 @@ namespace ValidationPrototype.Controllers
 
 			return Ok(result);
 		}
+
+		/// <summary>
+		/// Check data annotation approach
+		/// </summary>
+		[HttpPost("check-data-annotation-approach")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		public ActionResult CheckDataAnnotationApproach(CheckDataAnnotationApproachRequestModel model)
+		{
+			return Ok(new { Status = "OK" });
+		}
+
+		/// <summary>
+		/// Check validatable object approach
+		/// </summary>
+		[HttpPost("check-validatable-object-approach")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		public ActionResult CheckValidatableObjectApproach(CheckValidatableObjectApproachRequestModel model)
+		{
+			return Ok(new { Status = "OK" });
+		}
 	}
 }

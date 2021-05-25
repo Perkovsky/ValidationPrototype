@@ -13,7 +13,7 @@ namespace ValidationPrototype.Middlewares
 
 		public PermissionAccessValidationMiddleware(RequestDelegate next) => _next = next;
 
-		public async Task InvokeAsync(HttpContext context, IIdentityService identityService)
+		public async Task InvokeAsync(HttpContext context, IEntityValidationService identityService)
 		{
 			await _next.Invoke(context);
 		}

@@ -37,7 +37,7 @@ namespace ValidationPrototype
 				c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "ValidationPrototype.xml"));
 			});
 
-			services.AddSingleton<IIdentityService, IdentityService>();
+			services.AddSingleton<IEntityValidationService, EntityValidationService>();
 			services.AddSingleton<IEntityService, EntityService>();
 		}
 

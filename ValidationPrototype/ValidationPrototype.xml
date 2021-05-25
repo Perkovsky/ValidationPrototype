@@ -14,5 +14,15 @@
             Create entity: test exception
             </summary>
         </member>
+        <member name="M:ValidationPrototype.Controllers.PrototypeController.CheckDataAnnotationApproach(ValidationPrototype.Models.CheckDataAnnotationApproachRequestModel)">
+            <summary>
+            Check data annotation approach
+            </summary>
+        </member>
+        <member name="M:ValidationPrototype.Controllers.PrototypeController.CheckValidatableObjectApproach(ValidationPrototype.Models.CheckValidatableObjectApproachRequestModel)">
+            <summary>
+            Check validatable object approach
+            </summary>
+        </member>
     </members>
 </doc>
