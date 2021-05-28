@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading;
 using System.Threading.Tasks;
+using ValidationPrototype.Attributes;
 using ValidationPrototype.Models;
 using ValidationPrototype.Services;
 
@@ -26,6 +28,10 @@ namespace ValidationPrototype.Controllers
 		/// </summary>
 		[HttpGet("entities/{id}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+		[ProducesResponseType(StatusCodes.Status403Forbidden)]
+		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
 		public async Task<ActionResult> GetEntity([FromQuery]EntityDetailRequestModel model, CancellationToken cancellationToken)
 		{
 			var result = await _entityService.GetEntityAsync(model, cancellationToken)
@@ -39,6 +45,10 @@ namespace ValidationPrototype.Controllers
 		/// </summary>
 		[HttpGet("entities")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+		[ProducesResponseType(StatusCodes.Status403Forbidden)]
+		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
 		public async Task<ActionResult> GetEntities([FromQuery] EntityFilterRequestModel model, CancellationToken cancellationToken)
 		{
 			var result = await _entityService.GetEntitiesAsync(model, cancellationToken)
@@ -52,6 +62,10 @@ namespace ValidationPrototype.Controllers
 		/// </summary>
 		[HttpPost("entities")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+		[ProducesResponseType(StatusCodes.Status403Forbidden)]
+		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
 		public async Task<ActionResult> CreateEntity(CancellationToken cancellationToken)
 		{
 			var result = await _entityService.CreateEntityAsync(cancellationToken)
@@ -63,8 +77,13 @@ namespace ValidationPrototype.Controllers
 		/// <summary>
 		/// Check data annotation approach
 		/// </summary>
+		[AllowAnonymous]
 		[HttpPost("check-data-annotation-approach")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+		[ProducesResponseType(StatusCodes.Status403Forbidden)]
+		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
 		public ActionResult CheckDataAnnotationApproach(CheckDataAnnotationApproachRequestModel model)
 		{
 			return Ok(new { Status = "OK" });
@@ -73,9 +92,44 @@ namespace ValidationPrototype.Controllers
 		/// <summary>
 		/// Check validatable object approach
 		/// </summary>
+		[AllowAnonymous]
 		[HttpPost("check-validatable-object-approach")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+		[ProducesResponseType(StatusCodes.Status403Forbidden)]
+		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
 		public ActionResult CheckValidatableObjectApproach(CheckValidatableObjectApproachRequestModel model)
+		{
+			return Ok(new { Status = "OK" });
+		}
+
+		/// <summary>
+		/// Check permissions
+		/// </summary>
+		[CheckPermissions("KeyBox")]
+		[HttpPost("check-permissions")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+		[ProducesResponseType(StatusCodes.Status403Forbidden)]
+		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+		public ActionResult CheckPermissions()
+		{
+			return Ok(new { Status = "OK" });
+		}
+
+		/// <summary>
+		/// Check permissions with action
+		/// </summary>
+		[CheckPermissions("KeyBox", Action = "Read")]
+		[HttpPost("check-permissions-with-action")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+		[ProducesResponseType(StatusCodes.Status403Forbidden)]
+		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+		public ActionResult CheckPermissionsWithAction()
 		{
 			return Ok(new { Status = "OK" });
 		}

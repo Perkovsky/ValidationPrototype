@@ -8,11 +8,16 @@ using ValidationPrototype.Middlewares;
 
 namespace ValidationPrototype.Extensions
 {
-	public static class IApplicationBuilderExtensions
+	public static class ApplicationBuilderExtensions
 	{
-		public static IApplicationBuilder UsePermissionAccessValidation(this IApplicationBuilder app)
+		public static IApplicationBuilder UseCustomAuthentication(this IApplicationBuilder app)
 		{
-			return app.UseMiddleware<PermissionAccessValidationMiddleware>();
+			return app.UseMiddleware<CustomAuthenticationMiddleware>();
+		}
+
+		public static IApplicationBuilder UseCustomAuthorization(this IApplicationBuilder app)
+		{
+			return app.UseMiddleware<CustomAuthorizationMiddleware>();
 		}
 
 		#region GlobalErrorHandling

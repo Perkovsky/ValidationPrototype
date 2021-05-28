@@ -54,6 +54,8 @@ namespace ValidationPrototype
 			//// use the latest stable version https://github.com/micro-elements/MicroElements.Swashbuckle.FluentValidation
 			//services.AddFluentValidationRulesToSwagger();
 
+			services.AddScoped<IIdentityService, IdentityService>();
+			services.AddScoped<IPermissionCheckerService, PermissionCheckerService>();
 			services.AddScoped<IEntityValidationService, EntityValidationService>();
 			services.AddScoped<IEntityService, EntityService>();
 		}
@@ -74,7 +76,8 @@ namespace ValidationPrototype
 			app.UseAuthorization();
 
 			// add custom middlewares here
-			//app.UsePermissionAccessValidation();
+			app.UseCustomAuthentication();
+			app.UseCustomAuthorization();
 
 			app.UseEndpoints(endpoints =>
 			{

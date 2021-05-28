@@ -29,5 +29,25 @@
             Check validatable object approach
             </summary>
         </member>
+        <member name="M:ValidationPrototype.Controllers.PrototypeController.CheckPermissions">
+            <summary>
+            Check permissions
+            </summary>
+        </member>
+        <member name="M:ValidationPrototype.Controllers.PrototypeController.CheckPermissionsWithAction">
+            <summary>
+            Check permissions with action
+            </summary>
+        </member>
+        <member name="M:ValidationPrototype.Middlewares.CustomAuthenticationMiddleware.InternalAuthorizationAsync(Microsoft.AspNetCore.Http.HttpContext,ValidationPrototype.Services.IIdentityService)">
+            <summary>
+            Add "Authorization" to headers of request.
+            <example>
+            	For example:
+            	<code>"Authorization": "4F0A6D68-3A85-4A38-8F08-D0D04E7E4785"</code>
+            </example>
+            </summary>
+            <returns></returns>
+        </member>
     </members>
 </doc>
