@@ -37,26 +37,20 @@ namespace ValidationPrototype.Validators
 		{
 			When(x => !isPrimitiveLogicValidationFaulted, () =>
 				base.RuleFor(x => x)
-					.Must((model, property, context) => BusinessLogicValidate(model, context))
-					.WithName("Business Logic Validation")
+					.Custom((model, context) => BusinessLogicValidate(model, context))
 			);
 		}
 
-		private bool BusinessLogicValidate(T model, PropertyValidatorContext context)
+		private void BusinessLogicValidate(T model, CustomContext context)
 		{
 			var result = _validationService.Validate(model);
 			if (result.IsValid)
+				return;
+				
+			var propertyName = "Business Logic Validation";
+			foreach (var error in result.Errors)
 			{
-				return true;
-			}
-			else
-			{
-				context.Rule.MessageBuilder = ctx =>
-				{
-					//TODO: add errors as an array
-					return result.Errors.ToString();
-				};
-				return false;
+				context.AddFailure(propertyName, error);
 			}
 		}
 	}
