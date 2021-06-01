@@ -48,7 +48,7 @@ namespace ValidationPrototype
 				c.SwaggerDoc("v1", new OpenApiInfo { Title = "ValidationPrototype", Version = "v1" });
 				c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "ValidationPrototype.xml"));
 				
-				c.AddFluentValidationRules();
+				//c.AddFluentValidationRules();
 			});
 
 			//// use the latest stable version https://github.com/micro-elements/MicroElements.Swashbuckle.FluentValidation

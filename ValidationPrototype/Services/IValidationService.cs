@@ -1,8 +1,10 @@
-﻿namespace ValidationPrototype.Services
+﻿using ValidationPrototype.Models;
+
+namespace ValidationPrototype.Services
 {
 	public interface IValidationService<T>
 		where T : class
 	{
-		bool Validate(T model);
+		CustomValidationResult Validate(T model);
 	}
 }

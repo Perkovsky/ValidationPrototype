@@ -1,31 +1,44 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
+using System.Text;
 using ValidationPrototype.Models;
 
 namespace ValidationPrototype.Services
 {
 	public class EntityValidationService : IEntityValidationService
 	{
-		public bool Validate(EntityDetailRequestModel model)
+		private static CustomValidationResult BuildCustomValidationResult(StringBuilder sb)
+		{
+			return new CustomValidationResult
+			{
+				IsValid = sb.Length == 0,
+				Errors = sb.ToString().Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries)
+			};
+		}
+
+		public CustomValidationResult Validate(EntityDetailRequestModel model)
 		{
 			static int GetUnitId(int buildingId) => new Random(buildingId).Next();
 
-			if (model.Id % 2 > 0)
-				throw new ValidationException("Entity not found.");
-
 			int unitId = model.UnitId > 0 ? model.UnitId : GetUnitId(model.BuildingId);
-			if (unitId % 2 > 0)
-				throw new ValidationException("The unit does not belong to the building.");
 
-			return true;
+			var errors = new StringBuilder();
+			if (model.Id % 2 > 0)
+				errors.AppendLine("Entity not found.");
+			if (unitId > 10)
+				errors.AppendLine("Unit not found.");
+			if (unitId % 2 > 0)
+				errors.AppendLine("The unit does not belong to the building.");
+
+			return BuildCustomValidationResult(errors);
 		}
 
-		public bool Validate(EntityFilterRequestModel model)
+		public CustomValidationResult Validate(EntityFilterRequestModel model)
 		{
+			var errors = new StringBuilder();
 			if (model.BuildingId % 2 > 0)
-				throw new ValidationException("Building not found.");
+				errors.AppendLine("Building not found.");
 
-			return true;
+			return BuildCustomValidationResult(errors);
 		}
 	}
 }

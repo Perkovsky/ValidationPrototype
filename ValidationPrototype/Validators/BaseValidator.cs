@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using FluentValidation.Validators;
 using System;
 using System.Linq.Expressions;
 using ValidationPrototype.Services;
@@ -34,7 +35,29 @@ namespace ValidationPrototype.Validators
 
 		protected virtual void BusinessLogicValidation()
 		{
-			When(x => !isPrimitiveLogicValidationFaulted, () => base.RuleFor(x => x).Must(x => _validationService.Validate(x)));
+			When(x => !isPrimitiveLogicValidationFaulted, () =>
+				base.RuleFor(x => x)
+					.Must((model, property, context) => BusinessLogicValidate(model, context))
+					.WithName("Business Logic Validation")
+			);
+		}
+
+		private bool BusinessLogicValidate(T model, PropertyValidatorContext context)
+		{
+			var result = _validationService.Validate(model);
+			if (result.IsValid)
+			{
+				return true;
+			}
+			else
+			{
+				context.Rule.MessageBuilder = ctx =>
+				{
+					//TODO: add errors as an array
+					return result.Errors.ToString();
+				};
+				return false;
+			}
 		}
 	}
 }

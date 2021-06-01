@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Diagnostics;
 using ValidationPrototype.Services;
 using ValidationPrototype.Validators;
 
@@ -44,7 +45,13 @@ namespace ValidationPrototype.Models
 
 			RuleFor(x => new { x.BuildingId, x.UnitId })
 				.Must(x => x.BuildingId > 0 || x.UnitId > 0)
-				.WithMessage("Building ID or Unit ID is required.");
+				.WithName("BuildingId / UnitId")
+				.WithMessage("Building ID or Unit ID is required.")
+				.OnAnyFailure(x =>
+				{
+					 isPrimitiveLogicValidationFaulted = true;
+					 Debug.WriteLine("This is a logic emulator.");
+				});
 		}
 	}
 }
