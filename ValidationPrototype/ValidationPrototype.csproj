@@ -11,6 +11,7 @@
 
   <ItemGroup>
 		<PackageReference Include="FluentValidation.AspNetCore" Version="9.5.4" />
+		<PackageReference Include="HybridModelBinding" Version="0.18.1-alpha.4" />
 		<PackageReference Include="MicroElements.Swashbuckle.FluentValidation" Version="4.3.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.4" />
   </ItemGroup>

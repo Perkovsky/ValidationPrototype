@@ -14,6 +14,16 @@
             Get entity list: test request model validation
             </summary>
         </member>
+        <member name="M:ValidationPrototype.Controllers.PrototypeController.CheckBindingPost(ValidationPrototype.Models.CheckBindingRequestModel)">
+            <summary>
+            Check binding mix-model
+            </summary>
+        </member>
+        <member name="M:ValidationPrototype.Controllers.PrototypeController.CheckBindingPut(ValidationPrototype.Models.CheckBindingRequestModel)">
+            <summary>
+            Check binding mix-model
+            </summary>
+        </member>
         <member name="M:ValidationPrototype.Controllers.PrototypeController.CreateEntity(System.Threading.CancellationToken)">
             <summary>
             Create entity: test exception

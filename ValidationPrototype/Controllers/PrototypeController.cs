@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using HybridModelBinding;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -32,7 +33,7 @@ namespace ValidationPrototype.Controllers
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 		[ProducesResponseType(StatusCodes.Status403Forbidden)]
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-		public async Task<ActionResult> GetEntity([FromQuery]EntityDetailRequestModel model, CancellationToken cancellationToken)
+		public async Task<ActionResult> GetEntity([FromQuery] EntityDetailRequestModel model, CancellationToken cancellationToken)
 		{
 			var result = await _entityService.GetEntityAsync(model, cancellationToken)
 				.ConfigureAwait(false);
@@ -55,6 +56,34 @@ namespace ValidationPrototype.Controllers
 				.ConfigureAwait(false);
 
 			return Ok(result);
+		}
+
+		/// <summary>
+		/// Check binding mix-model
+		/// </summary>
+		[HttpPost("entities/{entityId}/sub-entity/{subEntityId}/check-post")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+		[ProducesResponseType(StatusCodes.Status403Forbidden)]
+		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+		public ActionResult CheckBindingPost([FromHybrid] CheckBindingRequestModel model)
+		{
+			return Ok(new { Status = "OK" });
+		}
+
+		/// <summary>
+		/// Check binding mix-model
+		/// </summary>
+		[HttpPut("entities/{entityId}/sub-entity/{subEntityId}/check-put")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+		[ProducesResponseType(StatusCodes.Status403Forbidden)]
+		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+		public ActionResult CheckBindingPut([FromHybrid] CheckBindingRequestModel model)
+		{
+			return Ok(new { Status = "OK" });
 		}
 
 		/// <summary>
